@@ -1,6 +1,3 @@
-* {
-    box-sizing: border-box;
-}
 body {
     background-color: #c8c8c8; 
 }
@@ -49,3 +46,36 @@ p {
     font-style: italic;
     color: #4D5159;
 }
+
+
+/* MINE IS HERE
+
+* {
+    box-sizing: border-box;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+}
+button {
+background-color: blueviolet;
+}
+button:hover{
+    background-color: orange;
+}
+.box {
+    padding         : 10px;
+    margin          : 20px;
+    border          : 5px solid rgb(0, 0, 0);
+    font-size: 32px;
+    background-color: blanchedalmond;
+    display: flex;
+    justify-content: center;
+    width: 390px;
+}
+
+#center-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}*/

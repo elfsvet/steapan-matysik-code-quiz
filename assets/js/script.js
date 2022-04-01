@@ -23,12 +23,28 @@
 // Define a set of questions
 
 // Grab reference to element
+var timerEl = document.getElementById("timer");
+var timeLeftEl = document.getElementById("timeLeft");
 
+var startQuizBtnEl = document.getElementById("startQuizButton");
 // Define other variables
+var correctAnswer = 0;
+var questionNumber = 0;
+var scoreResult;
+var questionIndex = 0;
 
 // Functions
 
 // When I click the start button, timer starts
+var totalTime = 100;
+var newQuiz = function() {
+    questionIndex = 0;
+    totalTime = 99;
+    timeLeftEl.textContent = totalTime;
+    initialInput.textContent = '';
+
+    // NEED TO CONTINUE SLEEPY
+}
 
 // Then I am presented with a question and choices
 
@@ -61,3 +77,4 @@
 // // check if there is any local storage
 
 // Add event Listeners
+startQuizBtnEl.addEventListener("click", newQuiz);
