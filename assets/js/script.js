@@ -23,15 +23,14 @@
 // Define a set of questions
 
 // Grab reference to element
-var timerEl = document.getElementById("timer");
-var timeLeftEl = document.getElementById("timeLeft");
 
-var startQuizBtnEl = document.getElementById("startQuizButton");
 // Define other variables
-var correctAnswer = 0;
-var questionNumber = 0;
-var scoreResult;
+// High Score Array
+var HighScores = [];
+// assign array details for questions
+var arrayShuffledQuestions;
 var questionIndex = 0;
+
 
 // Functions
 
@@ -77,4 +76,4 @@ var newQuiz = function() {
 // // check if there is any local storage
 
 // Add event Listeners
-startQuizBtnEl.addEventListener("click", newQuiz);
+// startQuizBtnEl.addEventListener("click", newQuiz);
