@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code Quiz</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <!-- Main content -->
+    <div class="container">
+
+        <!-- Top for highscore Link and timer -->
+        <div class="row">
+            <!-- High Scores link -->
+            <div class="colTextLeft">
+                <a href="#" id="viewHighScore">View High Scores</a>
+            </div>
+            <!-- Timer place -->
+            <div class="timer" id="colTextRight">
+                <p class="clock"></p> Time: <span id="timeLeft">0</span>
+            </div>
+            <!-- If times is < than 0  , need to add style="display: none;" to hide it from beginning -->
+            <div id="timesUp" class="colTextRight">Time's Up!</div>
+        </div>
+
+        <div id="allContent" class="rowTextLeft">
+            <div class="colMd2"></div>
+            <main class="colMd8Mt5">
+                <!-- start screen -->
+                <div id="start" class="m2JustifyContentCenter">
+                    <h1 class="p5">Quiz Challenge</h1>
+                    <p class="p5">Try to answer the following questions within the time limit.<br />
+                        Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+                    <button type="button" id="startQuizButton" class="btnBtnInfoMl5AlignCenter">Start Quiz</button>
+                </div>
+
+                <!-- quiz div -->
+                <div id="questions" class="displayNone">
+                    <p id="questionTitle" class="pl5Ml2Pt5JustifyContentCenterFontWeightBold"></p>
+                    <div class="pl5Pt2Pb3M2JustifyContentCenter">
+                        <p><button id="btn0" class="btnBtnDark"></button></p>
+                        <p><button id="btn1" class="btnBtnDark"></button></p>
+                        <p><button id="btn2" class="btnBtnDark"></button></p>
+                        <p><button id="btn3" class="btnBtnDark"></button></p>
+                        <!-- add a line to separate questions from an answer check add style="display:none;"  -->
+
+                        <hr id="lineBreak" class="mt4" />
+                        <!-- Answer will be checked here and display correct or wrong add style="display:none;"-->
+                        <p id="answerCheck"></p>
+                    </div>
+                </div>
+
+                <!-- score div need to add style="display:none;"-->
+                <div class="pl5Ml2Pt5JustifyContentCenterFontWeightBold" id="summary">
+                    <div class="col2"></div>
+                    <div class="col8TextLeft">
+                        <h2 class="fontWeightBoldPt2Pb3M2">Your final score is <span id="finalScore"></span> !</h2>
+                        <form>
+                            <p class="pt2Pb3M2">Enter your initials: <input type="text" id="initialInput"
+                                    class="formControlPt2Pb3Mt2">
+                                <button type="submit" id="submitInitialBtn" class="btnBtnInfoMt3">Submit</button>
+                            </p>
+                        </form>
+                    </div>
+                    <div class="col2"></div>
+                </div>
+
+                <!-- highscore section should have style="display:none;"-->
+                <div id="highScoreSection" class="pl5Ml4Pt5JustifyContentCenterFontWeightBold">
+                    <h2 class="fontWeightBoldPt2Pb3Mb2">High Scores</h2>
+                    <div id="listOfHighScores" class="listGroupListGroupFlushPt2Pb3Mb2"></div>
+
+                    <!-- append new highscore as new paragraph here -->
+                    <p>
+                        <button type="submit" class="btnBtnInfoMt3Mr3" id="goBackBtn">Go Back</button>
+                        <button type="submit" class="btnBtnInfoMt3" id="clearHighScoresBtn">Clear High
+                            Scores</button>
+                    </p>
+
+                </div>
+            </main>
+            <div class="colMd2"></div>
+        </div>
+        <!-- js links -->
+        <script src="./assets/js/script.js"></script>
+</body>
+</html>
