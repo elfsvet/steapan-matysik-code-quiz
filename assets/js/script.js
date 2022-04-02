@@ -26,15 +26,15 @@
 // Variables
 
 // Define a set of questions
-var question = [
+var questions = [
     {
         q: 'Inside which HTML element do we put the JavaScript?<br /><br /><p id="demo">This is a demonstration.</p>',
         a: '<script>',
         choices: [
             { choice: '<js>' },
-             { choice: '<script>' },
-              { choice: '<javascript>' },
-               { choice: '<scripting>' }]
+            { choice: '<script>' },
+            { choice: '<javascript>' },
+            { choice: '<scripting>' }]
     },
     {
         q: 'What is the correct JavaScript syntax to change the content of the HTML element below?',
@@ -60,9 +60,9 @@ var question = [
         q: 'How to write an IF statement in JavaScript?',
         a: 'if (i == 5)',
         choices: [
-            { choice: 'if (i == 5)' }, 
-            { choice: 'if i = 5' }, 
-            { choice: 'if i = 5 then' }, 
+            { choice: 'if (i == 5)' },
+            { choice: 'if i = 5' },
+            { choice: 'if i = 5 then' },
             { choice: 'if i == 5 then' }
         ]
     },
@@ -70,9 +70,9 @@ var question = [
         q: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
         a: 'if (i != 5)',
         choices: [
-            { choice: 'if (i <> 5)' }, 
-            { choice: 'if i =! 5 then' }, 
-            { choice: 'if (i != 5)' }, 
+            { choice: 'if (i <> 5)' },
+            { choice: 'if i =! 5 then' },
+            { choice: 'if (i != 5)' },
             { choice: 'if i <> 5' }
         ]
     },
@@ -80,9 +80,9 @@ var question = [
         q: 'How does a FOR loop start?',
         a: 'for (i = 0; i <= 5; i++)',
         choices: [
-            { choice: 'for (i <= 5; i++)' }, 
-            { choice: 'for (i = 0; i <= 5; i++)' }, 
-            { choice: 'for (i = 0; i <= 5)' }, 
+            { choice: 'for (i <= 5; i++)' },
+            { choice: 'for (i = 0; i <= 5; i++)' },
+            { choice: 'for (i = 0; i <= 5)' },
             { choice: 'for i = 1 to 5' }
         ]
     },
@@ -90,9 +90,9 @@ var question = [
         q: 'What is the correct way to write a JavaScript array?',
         a: 'var colors = ["red", "green", "blue"]',
         choices: [
-            { choice: 'var colors = 1 = ("red"), 2 = ("green"), 3 = ("blue")' }, 
-            { choice: 'var colors = (1:"red", 2:"green", 3:"blue")' }, 
-            { choice: 'var colors = ["red", "green", "blue"]' }, 
+            { choice: 'var colors = 1 = ("red"), 2 = ("green"), 3 = ("blue")' },
+            { choice: 'var colors = (1:"red", 2:"green", 3:"blue")' },
+            { choice: 'var colors = ["red", "green", "blue"]' },
             { choice: 'var colors = "red", "green", "blue"' }
         ]
     },
@@ -100,9 +100,9 @@ var question = [
         q: 'How do you round the number 7.25, to the nearest integer?',
         a: 'Math.round(7.25)',
         choices: [
-            { choice: 'round(7.25)' }, 
-            { choice: 'rnd(7.25)' }, 
-            { choice: 'Math.rnd(7.25)' }, 
+            { choice: 'round(7.25)' },
+            { choice: 'rnd(7.25)' },
+            { choice: 'Math.rnd(7.25)' },
             { choice: 'Math.round(7.25)' }
         ]
     },
@@ -110,9 +110,9 @@ var question = [
         q: 'How do you find the number with the highest value of x and y?',
         a: 'Math.max(x, y)',
         choices: [
-            { choice: 'top(x, y)' }, 
-            { choice: 'Math.ceil(x, y)' }, 
-            { choice: 'ceil(x, y)' }, 
+            { choice: 'top(x, y)' },
+            { choice: 'Math.ceil(x, y)' },
+            { choice: 'ceil(x, y)' },
             { choice: 'Math.max(x, y)' }
         ]
     },
@@ -120,9 +120,9 @@ var question = [
         q: 'Which event occurs when the user clicks on an HTML element?',
         a: 'onclick',
         choices: [
-            { choice: 'onmouseclick' }, 
-            { choice: 'onclick' }, 
-            { choice: 'onmouseover' }, 
+            { choice: 'onmouseclick' },
+            { choice: 'onclick' },
+            { choice: 'onmouseover' },
             { choice: 'onchange' }
         ]
     },
@@ -130,9 +130,9 @@ var question = [
         q: 'Which operator is used to assign a value to a variable?',
         a: '=',
         choices: [
-            { choice: '*' }, 
-            { choice: '=' }, 
-            { choice: '-' }, 
+            { choice: '*' },
+            { choice: '=' },
+            { choice: '-' },
             { choice: 'x' }
         ]
     },
@@ -168,7 +168,7 @@ var wrongAnswerEl = document.getElementById("wrong");
 
 // Buttons
 var buttonStartGameEl = document.getElementById("start-game");
-// var buttonSubmitScoreEl = document.querySelector("#submit-score");
+var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
@@ -194,7 +194,79 @@ timerEl.innerHTML = 0;
 var startGame = function (event) {
     // add classes to show/hide start and quiz screen
     starterContainerEl.classList.add('hide');
+    starterContainerEl.classList.remove('show');
+    questionContainerEl.classList.remove('hide');
+    questionContainerEl.classList.add('show');
+    // shuffle the question so they will show in random order
+    arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
+    setTime();
+    setQuestion();
 }
+
+// need to setTime function and setQuestion()
+var setTime = function () {
+    timeLeft = 90;
+    // timer check to see if game can still proceed. setInterval of checking and doing function every 1sec.
+    var timerCheck = setInterval(function () {
+        timerEl.innerText = timeLeft;
+        timeLeft--;
+        // if game over clear Interval of timerCheck() function.
+        if (gameOver) {
+            clearInterval(timerCheck);
+        }
+        // if timer less than 0 open showScore() function and set timer to the 0 and clear the interval of timeCheck() function.
+        if (timeLeft < 0) {
+            showScore();
+            timerEl.innerText = 0;
+            clearInterval(timerCheck);
+        }
+    }, 1000);
+};
+
+var setQuestion = function () {
+    resetAnswers();
+    displayQuetions(arrayShuffledQuestions[questionIndex]);
+}
+
+// Display questions information  including answer buttons
+var displayQuetions = function (index) {
+    questionEl.innerText = index; // check if needs index.q
+    for (var i = 0; i < index.choices.length; i++) {
+        var answerButton = document.createElement("button");
+        answerButton.innerText = index.choices[i].choice;
+        // we need to add a class to the answer button to easy style it
+        answerButton.classList.add('btn');
+        answerButton.classList.add('answer-btn');
+        answerButton.addEventListener('click', answerCheck());
+        answerButtonsEl.appendChild(answerButton);
+    }
+};
+
+// need to add answerCheck() function
+var answerCheck = function (event) {
+    var selectedAnswer = event.target;
+
+
+
+// text here!!! Good night
+
+
+
+
+    // go to next question, check if there is more questions
+    questionIndex++;
+    if(arrayShuffledQuestions.length > questionIndex + 1) {
+        setQuestion();
+    }
+    else {
+        gameOver = true;
+        showScore();
+    }
+}
+// need to create showScore() function
+
+
+
 
 // Then I am presented with a question and choices
 
@@ -228,7 +300,7 @@ var startGame = function (event) {
 
 // Add event Listeners
 
-buttonStartGameEl.addEventListener("click", () => {console.log("Did you press Start Quiz?")});
-buttonGoBackEl.addEventListener("click", () => {console.log("Did you press Go Back button?")});
-buttonClearHighScoreEl.addEventListener("click", () => {console.log("Did you press Clear high Scores?")});
-// buttonSubmitScoreEl.addEventListener("submit", () => {alert("I'm submit button")});
+buttonStartGameEl.addEventListener("click", () => { console.log("Did you press Start Quiz?") });
+buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
+buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
+// buttonSubmitScoreEl.addEventListener("click", () => { alert("I'm submit button") });
