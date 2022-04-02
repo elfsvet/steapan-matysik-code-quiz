@@ -23,6 +23,15 @@
 // Define a set of questions
 
 // Grab reference to element
+var timerEl = document.querySelector("timer");
+var highScoresLink = document.getElementById("view-high-scores");
+var starterContainer = document.getElementsById("starter-container");
+var btnStartGame = document.getElementById("start-game");
+var questionContainer = document.getElementById("question-container");
+var question = document.getElementById("question");
+
+
+
 
 // Define other variables
 // High Score Array
