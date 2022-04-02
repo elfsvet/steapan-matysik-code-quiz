@@ -108,9 +108,9 @@ p {
 }
 
 /* the elements with class hide will disapear from the page */
-.hide{
+/* .hide{
     display: none;
-}
+} */
 
 #question {
     text-align : left;

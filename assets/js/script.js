@@ -172,6 +172,10 @@ var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
+buttonSubmitScoreEl.addEventListener("click", () => { console.log("I'm submit button") });
+buttonStartGameEl.addEventListener("click", () => { console.log("Did you press Start Quiz?") });
+buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
+buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
 
 
 
@@ -189,11 +193,16 @@ timerEl.innerHTML = 0;
 
 
 // Functions
+// choose a random character from an array/it needs an array as an argument
+
+var randomCharacterFromArray = function (array) {
+    return array[Math.floor(Math.random() * array.length)];
+  };
 
 // When I click the start button, timer starts
-var startGame = function (event) {
+var startGame = function () {
     // add classes to show/hide start and quiz screen
-    starterContainerEl.classList.add('hide');
+    starterContainerEl.classList.add('hide'); // we might don't need to have show
     starterContainerEl.classList.remove('show');
     questionContainerEl.classList.remove('hide');
     questionContainerEl.classList.add('show');
@@ -230,7 +239,7 @@ var setQuestion = function () {
 
 // Display questions information  including answer buttons
 var displayQuetions = function (index) {
-    questionEl.innerText = index; // check if needs index.q
+    questionEl.innerText = index.q; // check how we get index list index.q
     for (var i = 0; i < index.choices.length; i++) {
         var answerButton = document.createElement("button");
         answerButton.innerText = index.choices[i].choice;
@@ -245,7 +254,7 @@ var displayQuetions = function (index) {
 // need to add answerCheck() function
 var answerCheck = function (event) {
     var selectedAnswer = event.target;
-
+    
 
 
 // text here!!! Good night
@@ -300,7 +309,3 @@ var answerCheck = function (event) {
 
 // Add event Listeners
 
-buttonStartGameEl.addEventListener("click", () => { console.log("Did you press Start Quiz?") });
-buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
-buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
-// buttonSubmitScoreEl.addEventListener("click", () => { alert("I'm submit button") });
