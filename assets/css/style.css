@@ -82,6 +82,9 @@ p {
 .end h1,
 .end p {
     /* text-align: left; */
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
 /* input form style in end container */
@@ -92,6 +95,7 @@ p {
     width        : 35%;
     font-size    : 2.2rem;
     border-radius: 10px;
+    margin: 0 20px;
 }
 
 /* then input form clicked to input info it will be */
@@ -104,9 +108,9 @@ p {
 }
 
 /* the elements with class hide will disapear from the page */
-/* .hide{
+.hide{
     display: none;
-} */
+}
 
 #question {
     text-align : left;
@@ -143,15 +147,15 @@ p {
     margin            : 20px 0;
 }
 
-.startend {
+.start-end {
     width     : 25%;
-    margin-top: 10px
+    margin-top: 0;
 }
 
-.answerbtn {
+.answer-btn {
     width     : 50%;
     text-align: left;
-    font-size : 30vw;
+    font-size : 3.0vw;
 }
 
 /* correct/wrong styling */
@@ -178,6 +182,7 @@ li {
         width    : 100%;
         font-size: 3.0vw;
     }
+    
 
     #question {
         font-size: 4.5vw;
