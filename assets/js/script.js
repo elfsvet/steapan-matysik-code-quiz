@@ -178,7 +178,7 @@ var startGame = function () {
     starterContainerEl.classList.add("hide"); //hide content
     questionContainerEl.classList.remove("hide"); //show content
     questionEl.textContent = questions[0].q; // display question
-    console.log(questions[0].a); //log right answer
+    // bring questions and place them as buttons in question/answer container
     displayAnswers();
 
 };
@@ -309,15 +309,16 @@ var displayAnswers = function () {
         var answerButton = document.createElement("button");
         answerButton.classList.add('btn');
         answerButton.classList.add('answer-btn');
-        answerButton.textContent = questions[questionIndex].choices[i].choice
+        answerButton.textContent = questions[questionIndex].choices[i].choice;
         // need to check answer here function.
         answerButton.addEventListener('click', answerCheck);
         answerButtonsEl.appendChild(answerButton);
     }
+    console.log(questions[questionIndex].a); //log right answer
 };
 // show a bar with correct and hide wrong if any.
 var answerCorrect = () => {
-    if (correctAnswerEl.className = "hide") { // if hide already in class properties wont change any. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
+    if (correctAnswerEl.className = "hide") { // if hide already in class properties wont change anything. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
         correctAnswerEl.classList.remove("hide");
         wrongAnswerEl.classList.add("hide");
     }
