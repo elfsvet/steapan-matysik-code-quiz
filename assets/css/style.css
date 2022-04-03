@@ -102,15 +102,15 @@ p {
 .end input:focus {
     border: 2px solid var(--secondary);
 }
-
+/* 
 .show {
-    display: flex;
-}
+    display: flex; // i dont think we need it anymore it's overdone
+} */
 
 /* the elements with class hide will disapear from the page */
-/* .hide{
+.hide{
     display: none;
-} */
+}
 
 #question {
     text-align : left;
@@ -155,7 +155,10 @@ p {
 .answer-btn {
     width     : 50%;
     text-align: left;
-    font-size : 3.0vw;
+    font-size: 3.2vmin; 
+    /* look this up vmin */
+}
+
 }
 
 /* correct/wrong styling */
@@ -176,7 +179,7 @@ li {
 
 /* media query for smaller screens */
 
-@media screen and (max-width: 1024px) {
+@media screen and (max-width: 1720px) {
 
     .btn {
         width    : 100%;

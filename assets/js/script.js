@@ -28,7 +28,7 @@
 // Define a set of questions
 var questions = [
     {
-        q: 'Inside which HTML element do we put the JavaScript?<br /><br /><p id="demo">This is a demonstration.</p>',
+        q: 'Inside which HTML element do we put the JavaScript?',
         a: '<script>',
         choices: [
             { choice: '<js>' },
@@ -172,17 +172,14 @@ var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
-buttonSubmitScoreEl.addEventListener("click", () => { console.log("I'm submit button") });
-buttonStartGameEl.addEventListener("click", () => { console.log("Did you press Start Quiz?") });
-buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
-buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
+
 
 
 
 // High Score Array
 var HighScores = [];
 // assign array details for questions
-var arrayShuffledQuestions;
+var shuffledQuestions;
 var questionIndex = 0;
 var score = 0;
 var timeLeft;
@@ -193,27 +190,101 @@ timerEl.innerHTML = 0;
 
 
 // Functions
-// choose a random character from an array/it needs an array as an argument
+// choose a random index from an array.length/it needs an array as an argument
 
-var randomCharacterFromArray = function (array) {
-    return array[Math.floor(Math.random() * array.length)];
-  };
+var randomIndexOfArray = function (array) {
+    return Math.floor(Math.random() * array.length);
+};
 
-// When I click the start button, timer starts
-var startGame = function () {
-    // add classes to show/hide start and quiz screen
-    starterContainerEl.classList.add('hide'); // we might don't need to have show
-    starterContainerEl.classList.remove('show');
-    questionContainerEl.classList.remove('hide');
-    questionContainerEl.classList.add('show');
-    // shuffle the question so they will show in random order
-    arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
-    setTime();
-    setQuestion();
-}
+var shuffle = function (array) {
+    let currentIndex = array.length, randomIndex;
 
-// need to setTime function and setQuestion()
-var setTime = function () {
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+        
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+        
+        return array;
+    }
+    
+    //   WHEN I click the start button - I am presented with a question
+    var startGame = function () {
+        
+        shuffledQuestions = shuffle(questions);
+        starterContainerEl.classList.add("hide"); //hide content
+        questionContainerEl.classList.remove("hide"); //show content
+        questionEl.textContent = questions[0].q; // display question
+        console.log(questions[0].a);
+        for (var i = 0; i < questions[questionIndex].choices.length; i++) {
+            var answerButton = document.createElement("button");
+            answerButton.classList.add('btn');
+            answerButton.classList.add('answer-btn');
+            answerButton.textContent = questions[questionIndex].choices[i].choice
+            // need to check answer here function.
+            answerButtonsEl.appendChild(answerButton);
+        }
+        answerCheck;
+        
+    };
+    
+    var answerCheck = function (event) {
+        var selectedAnswer = event.target.textContent
+        console.log(selectedAnswer)
+        if (questions[questionIndex].a === selectedAnswer) {
+            console.log("win win");
+            score += 7;
+            correctAnswerEl.classList.remove("hide");
+        }
+        else {
+            console.log("try again");
+        }
+    };
+    // while we still have some answers in answers container remove first and go for next one which become first if not it stops.
+    var resetAnswers = () => {
+        while (answerButtonsEl.firstChild) {
+            answerButtonsEl.removeChild(answerButtonsEl.firstChild);
+        }
+    };
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // // When I click the start button, timer starts
+    // var startGame = function () {
+        //     // add classes to show/hide start and quiz screen
+        //     starterContainerEl.classList.add('hide'); // we might don't need to have show
+        //     // starterContainerEl.classList.remove('show');
+        //     questionContainerEl.classList.remove('hide');
+        //     // questionContainerEl.classList.add('show');
+        //     // shuffle the question so they will show in random order
+        //     arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
+        //     setTime();
+        //     setQuestion();
+        // }
+        
+        // need to setTime function and setQuestion()
+        var setTime = function () {
     timeLeft = 90;
     // timer check to see if game can still proceed. setInterval of checking and doing function every 1sec.
     var timerCheck = setInterval(function () {
@@ -255,16 +326,16 @@ var displayQuetions = function (index) {
 var answerCheck = function (event) {
     var selectedAnswer = event.target;
     
-
-
-// text here!!! Good night
-
-
-
-
+    
+    
+    // text here!!! Good night
+    
+    
+    
+    
     // go to next question, check if there is more questions
     questionIndex++;
-    if(arrayShuffledQuestions.length > questionIndex + 1) {
+    if (arrayShuffledQuestions.length > questionIndex + 1) {
         setQuestion();
     }
     else {
@@ -309,3 +380,8 @@ var answerCheck = function (event) {
 
 // Add event Listeners
 
+
+buttonStartGameEl.addEventListener("click", startGame);
+buttonSubmitScoreEl.addEventListener("click", () => { console.log("I'm submit button") });
+buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
+buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
