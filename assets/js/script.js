@@ -1,28 +1,3 @@
-// User Story
-// AS A coding boot camp student
-// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-// SO THAT I can gauge my progress compared to my peers
-
-
-// Acceptance Criteria
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
-
-
-
-
-
-
-
 // Variables
 
 // Define a set of questions
@@ -196,153 +171,144 @@ var randomIndexOfArray = function (array) {
     return Math.floor(Math.random() * array.length);
 };
 
-var shuffle = function (array) {
-    let currentIndex = array.length, randomIndex;
+//   WHEN I click the start button - I am presented with a question
+var startGame = function () {
 
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-        
-        // Pick a remaining element...
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-        
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex], array[currentIndex]];
-        }
-        
-        return array;
-    }
-    
-    //   WHEN I click the start button - I am presented with a question
-    var startGame = function () {
-        
-        shuffledQuestions = shuffle(questions);
-        starterContainerEl.classList.add("hide"); //hide content
-        questionContainerEl.classList.remove("hide"); //show content
-        questionEl.textContent = questions[0].q; // display question
-        console.log(questions[0].a);
-        for (var i = 0; i < questions[questionIndex].choices.length; i++) {
-            var answerButton = document.createElement("button");
-            answerButton.classList.add('btn');
-            answerButton.classList.add('answer-btn');
-            answerButton.textContent = questions[questionIndex].choices[i].choice
-            // need to check answer here function.
-            answerButtonsEl.appendChild(answerButton);
-        }
-        answerCheck;
-        
-    };
-    
-    var answerCheck = function (event) {
-        var selectedAnswer = event.target.textContent
-        console.log(selectedAnswer)
-        if (questions[questionIndex].a === selectedAnswer) {
-            console.log("win win");
-            score += 7;
-            correctAnswerEl.classList.remove("hide");
-        }
-        else {
-            console.log("try again");
-        }
-    };
-    // while we still have some answers in answers container remove first and go for next one which become first if not it stops.
-    var resetAnswers = () => {
-        while (answerButtonsEl.firstChild) {
-            answerButtonsEl.removeChild(answerButtonsEl.firstChild);
-        }
-    };
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // // When I click the start button, timer starts
-    // var startGame = function () {
-        //     // add classes to show/hide start and quiz screen
-        //     starterContainerEl.classList.add('hide'); // we might don't need to have show
-        //     // starterContainerEl.classList.remove('show');
-        //     questionContainerEl.classList.remove('hide');
-        //     // questionContainerEl.classList.add('show');
-        //     // shuffle the question so they will show in random order
-        //     arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
-        //     setTime();
-        //     setQuestion();
-        // }
-        
-        // need to setTime function and setQuestion()
-        var setTime = function () {
-    timeLeft = 90;
-    // timer check to see if game can still proceed. setInterval of checking and doing function every 1sec.
-    var timerCheck = setInterval(function () {
-        timerEl.innerText = timeLeft;
-        timeLeft--;
-        // if game over clear Interval of timerCheck() function.
-        if (gameOver) {
-            clearInterval(timerCheck);
-        }
-        // if timer less than 0 open showScore() function and set timer to the 0 and clear the interval of timeCheck() function.
-        if (timeLeft < 0) {
-            showScore();
-            timerEl.innerText = 0;
-            clearInterval(timerCheck);
-        }
-    }, 1000);
+    timeLeft = questions.length * 6; // every question has 6 sec to chose the answer.
+    starterContainerEl.classList.add("hide"); //hide content
+    questionContainerEl.classList.remove("hide"); //show content
+    questionEl.textContent = questions[0].q; // display question
+    console.log(questions[0].a); //log right answer
+    displayAnswers();
+
 };
 
-var setQuestion = function () {
-    resetAnswers();
-    displayQuetions(arrayShuffledQuestions[questionIndex]);
-}
-
-// Display questions information  including answer buttons
-var displayQuetions = function (index) {
-    questionEl.innerText = index.q; // check how we get index list index.q
-    for (var i = 0; i < index.choices.length; i++) {
-        var answerButton = document.createElement("button");
-        answerButton.innerText = index.choices[i].choice;
-        // we need to add a class to the answer button to easy style it
-        answerButton.classList.add('btn');
-        answerButton.classList.add('answer-btn');
-        answerButton.addEventListener('click', answerCheck());
-        answerButtonsEl.appendChild(answerButton);
-    }
-};
-
-// need to add answerCheck() function
 var answerCheck = function (event) {
-    var selectedAnswer = event.target;
-    
-    
-    
-    // text here!!! Good night
-    
-    
-    
-    
-    // go to next question, check if there is more questions
-    questionIndex++;
-    if (arrayShuffledQuestions.length > questionIndex + 1) {
-        setQuestion();
+    var selectedAnswer = event.target.textContent;
+    if (questions[questionIndex].a === selectedAnswer) {    // if answer correct do next
+        answerCorrect();
+        score += 10;
     }
+    else {      // or if answer wrong do next
+        answerWrong();
+        score -= 5;      // remove 5 points from Griffindor
+        timeLeft -= 3;  // remove 3 secs
+    }
+
+    // go to the next question, if we have more questions in array questions
+    if(questionIndex+1 < questions.length){ //don't run if just question cause error in start game with index.
+        questionIndex++;
+        setQuestion();
+    } 
     else {
         gameOver = true;
         showScore();
     }
+
+};
+
+var setQuestion = function() {
+    console.log("Set Question");
+};
+
+var showScore = function() {
+    console.log("Show Score");
+    questionContainerEl.classList.add("hide");
+    highScoreContainerEl.classList.remove("hide");
+
+    var scoreDisplay = document.createElement('p');
+    scoreDisplay.textContent = "Your final score is: " + score + "!";
+    highScoreContainerEl.appendChild(scoreDisplay);
+
+};
+// while we still have some answers in answers container remove first and go for next one which become first if not it stops.
+var resetAnswers = () => {
+    while (answerButtonsEl.firstChild) {
+        answerButtonsEl.removeChild(answerButtonsEl.firstChild);
+    }
+};
+
+var displayAnswers = function () {
+    for (var i = 0; i < questions[questionIndex].choices.length; i++) { // to display answers:
+        var answerButton = document.createElement("button");
+        answerButton.classList.add('btn');
+        answerButton.classList.add('answer-btn');
+        answerButton.textContent = questions[questionIndex].choices[i].choice
+        // need to check answer here function.
+        answerButton.addEventListener('click', answerCheck);
+        answerButtonsEl.appendChild(answerButton);
+    }
+};
+// show a bar with correct and hide wrong if any.
+var answerCorrect = () => {
+    if (correctAnswerEl.className = "hide") { // if hide already in class properties wont change any. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
+        correctAnswerEl.classList.remove("hide");
+        wrongAnswerEl.classList.add("hide");
+    }
 }
+
+var answerWrong = () => {
+    if (wrongAnswerEl.className = "hide") {
+        wrongAnswerEl.classList.remove("hide");
+        correctAnswerEl.classList.add("hide");
+    }
+}
+
+
+// User Story
+// AS A coding boot camp student
+// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
+// SO THAT I can gauge my progress compared to my peers
+
+
+// Acceptance Criteria
+// GIVEN I am taking a code quiz
+// WHEN I click the start button
+// THEN a timer starts and I am presented with a question
+// WHEN I answer a question
+// THEN I am presented with another question
+// WHEN I answer a question incorrectly
+// THEN time is subtracted from the clock
+// WHEN all questions are answered or the timer reaches 0
+// THEN the game is over
+// WHEN the game is over
+// THEN I can save my initials and score
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// // When I click the start button, timer starts
+// var startGame = function () {
+//     // add classes to show/hide start and quiz screen
+//     starterContainerEl.classList.add('hide'); // we might don't need to have show
+//     // starterContainerEl.classList.remove('show');
+//     questionContainerEl.classList.remove('hide');
+//     // questionContainerEl.classList.add('show');
+//     // shuffle the question so they will show in random order
+//     arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
+//     setTime();
+//     setQuestion();
+// }
+
+// need to setTime function and setQuestion()
+
+
+// Display questions information  including answer buttons
+
+
+// need to add answerCheck() function
+
 // need to create showScore() function
 
 

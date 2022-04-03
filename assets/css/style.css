@@ -82,9 +82,9 @@ p {
 .end h1,
 .end p {
     /* text-align: left; */
-    display: flex;
+    display    : flex;
     align-items: center;
-    flex-wrap: wrap;
+    flex-wrap  : wrap;
 }
 
 /* input form style in end container */
@@ -95,20 +95,21 @@ p {
     width        : 35%;
     font-size    : 2.2rem;
     border-radius: 10px;
-    margin: 0 20px;
+    margin       : 0 20px;
 }
 
 /* then input form clicked to input info it will be */
 .end input:focus {
     border: 2px solid var(--secondary);
 }
+
 /* 
 .show {
     display: flex; // i dont think we need it anymore it's overdone
 } */
 
 /* the elements with class hide will disapear from the page */
-.hide{
+.hide {
     display: none;
 }
 
@@ -155,13 +156,31 @@ p {
 .answer-btn {
     width     : 50%;
     text-align: left;
-    font-size: 3.2vmin; 
+    font-size : 3.2vmin;
     /* look this up vmin */
 }
 
 }
 
 /* correct/wrong styling */
+/* correct/wrong styling */
+
+#correct,
+#wrong {
+    font-size : 25px;
+    text-align: center;
+    color     : rgba(199, 187, 187, 0.8);
+    font-style: italic;
+    margin    : 0 100px;
+}
+
+#correct h2,
+#wrong h2 {
+    border-top : 2px solid rgba(199, 187, 187, 0.8);
+    margin     : 0 auto;
+    text-align : center;
+    padding-top: 5px;
+}
 
 /* List for High Scores */
 
@@ -185,7 +204,7 @@ li {
         width    : 100%;
         font-size: 3.0vw;
     }
-    
+
 
     #question {
         font-size: 4.5vw;
