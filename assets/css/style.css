@@ -88,10 +88,10 @@ p {
 
 .end h1,
 .end p {
-    text-align: left;
+    text-align    : left;
     /* display    : flex;
-    align-items: center;
-    flex-wrap  : wrap; */
+    align-items   : center;
+    flex-wrap     : wrap; */
 }
 
 /* input form style in end container */
@@ -149,9 +149,9 @@ p {
 }
 
 .btn:hover {
-    background   : var(--tertiary);
+    background      : var(--tertiary);
     /* border-radius: 10px; */
-    /* box-shadow: 0 2px grey; */
+    /* box-shadow   : 0 2px grey; */
 }
 
 .btn:active {
@@ -218,7 +218,7 @@ li {
 
 
     .btn {
-        width: 100%;
+        width    : 100%;
         font-size: 3.0vw;
     }
 

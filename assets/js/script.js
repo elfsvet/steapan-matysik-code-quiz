@@ -282,7 +282,7 @@ var showScore = function () {
     var scoreDisplay = document.createElement('p');
     scoreDisplay.textContent = "Your final score is: " + score + "!";
     scoreBannerEl.appendChild(scoreDisplay);
-    
+
 
 };
 
@@ -311,12 +311,12 @@ var createHighScore = function (event) {
     // push and sort scores
     highScores.push(initialScore);
     highScores.sort(sortedArray);
-    
+
     // clear visible list to resort
     while (highScoreListEl.firstChild) {
         highScoreListEl.removeChild(highScoreListEl.firstChild);
     }
-    
+
     // create elements in order of high scores
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEl = document.createElement('li');
@@ -325,11 +325,11 @@ var createHighScore = function (event) {
         highScoreListEl.appendChild(highScoreEl);
         console.log(highScoreEl);
     }
-    
+
     saveHighScore();
     // debugger;
     displayHighScores(); // need a function
-    
+
 };
 
 var displayHighScores = function () {
