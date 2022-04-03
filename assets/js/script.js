@@ -15,9 +15,9 @@ var questions = [
         q: 'What is the correct JavaScript syntax to change the content of the HTML element below?',
         a: 'document.getElementById("demo").innerHTML = "Hello World!";',
         choices: [
-            { choice: 'document.getElementById("demo").innerHTML = "Hello World!";' },
-            { choice: 'document.getElementByName("p").innerHTML = "Hello World!";' },
-            { choice: 'document.getElement("p").innerHTML = "Hello World!";' },
+            { choice: 'document.getElementById\n("demo").innerHTML = "Hello World!";' },
+            { choice: 'document.getElementByName\n("p").innerHTML = "Hello World!";' },
+            { choice: 'document.getElement("p")\n.innerHTML = "Hello World!";' },
             { choice: '#demo.innerHTML = "Hello World!";' }
         ]
     },
@@ -143,7 +143,7 @@ var wrongAnswerEl = document.getElementById("wrong");
 
 // Buttons
 var buttonStartGameEl = document.getElementById("start-game");
-var buttonSubmitScoreEl = document.getElementById("submit-score");
+// var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
@@ -160,6 +160,16 @@ var gameOver;
 timerEl.innerHTML = 0;
 
 // Functions
+//to remove all containers from display
+var cleanScreen = function () {
+    starterContainerEl.className = 'hide';
+    questionContainerEl.className = 'hide';
+    endContainerEl.className = 'hide';
+    highScoreContainerEl.className = 'hide';
+    correctAnswerEl.className = 'hide';
+    wrongAnswerEl.className = 'hide';
+
+};
 
 // choose a random index from an array.length/it needs an array as an argument
 var randomIndexOfArray = function (array) {
@@ -180,19 +190,31 @@ var setTime = function () {
 
         if (timeLeft < 0) {
             showScore();
+            console.log("i am from set time ()");
             timerEl.textContent = 0;
             clearInterval(timerCheck);
         }
     }, 1000);
 };
 
+
+var restartGame = function () {
+    cleanScreen();
+    starterContainerEl.classList.remove('hide');
+    scoreBannerEl.removeChild(scoreBannerEl.lastChild);
+    questionIndex = 0;
+    gameOver = "";
+    timerEl.textContent = 0;
+    score = 0;
+    questionContainerEl.removeChild
+};
+
 //   WHEN I click the start button - I am presented with a question
 var startGame = function () {
-
-    starterContainerEl.classList.add("hide"); //hide content
+    cleanScreen();
     questionContainerEl.classList.remove("hide"); //show content
     setTime();
-    displayAnswers();
+    setQuestion();
 
 };
 
@@ -205,7 +227,7 @@ var answerCheck = function (event) {
     else {      // or if answer wrong do next
         answerWrong();
         score -= 5;      // remove 5 points from Griffindor
-        timeLeft -= 3;  // remove 3 secs
+        timeLeft -= 10;  // remove secs
     }
 
     // go to the next question, if we have more questions in array questions
@@ -216,7 +238,7 @@ var answerCheck = function (event) {
     else {
         gameOver = true;
         showScore();
-        console.log(correctAnswerEl.className);
+        console.log("im from answerCheck()");
     }
 
 };
@@ -254,72 +276,77 @@ var displayAnswers = function () {
 
 // to display score;
 var showScore = function () {
-    questionContainerEl.classList.add("hide");
-    highScoreContainerEl.classList.remove("hide");
+    cleanScreen();
+    endContainerEl.classList.remove("hide");
 
     var scoreDisplay = document.createElement('p');
     scoreDisplay.textContent = "Your final score is: " + score + "!";
-    highScoreContainerEl.appendChild(scoreDisplay);
+    scoreBannerEl.appendChild(scoreDisplay);
+    
 
+};
+
+
+// return sorted array
+var sortedArray = function (a, b) {
+    return (b.score - a.score);
 };
 
 // create high score values
 var createHighScore = function (event) {
-    event.preventDefault()
+    event.preventDefault();
     var initials = document.getElementById("initials").value;
-    if (!initial) {
+    if (!initials) {
         alert("Enter your initials!");
         return;
     }
+    // clean the form
     initialsFormEl.reset();
 
+    //creat an object with initials and score keys and values
     var initialScore = {
         initials: initials,
         score: score
     }
-
-    // return sorted array
-    var sortedArray = function (a, b) {
-        return (b.score - a.score);
-    }
     // push and sort scores
     highScores.push(initialScore);
-    highScores.sort(function (a, b) {
-        return b.score - a.score
-    });
-
+    highScores.sort(sortedArray);
+    
     // clear visible list to resort
     while (highScoreListEl.firstChild) {
         highScoreListEl.removeChild(highScoreListEl.firstChild);
     }
-
+    
     // create elements in order of high scores
     for (var i = 0; i < highScores.length; i++) {
         var highScoreEl = document.createElement('li');
         highScoreEl.className = 'high-score';
-        highScoreEl.textContent = highScores[i].initials + " - " + highScores[i].score;
+        highScoreEl.textContent = highScores[i].initials + " : " + highScores[i].score;
         highScoreListEl.appendChild(highScoreEl);
+        console.log(highScoreEl);
     }
-
+    
     saveHighScore();
+    // debugger;
     displayHighScores(); // need a function
-
+    
 };
 
 var displayHighScores = function () {
-    highScoreContainerEl.classList.remove("hide");
+    cleanScreen();
+    highScoreContainerEl.classList.remove("hide");  // highsc already has ol with initials and score
     gameOver = true;
-
-    if (highScoreContainerEl.className != "hide") {
-        starterContainerEl.className = 'hide';
-        questionContainerEl.className = 'hide';
-        endContainerEl.className = 'hide';
-        correctAnswerEl.className = 'hide';
-        wrongAnswerEl.className = 'hide';
-    }
 };
 
+var clearHighScores = function () {
+    highScores = [];
 
+    while (highScoreListEl.firstChild) {
+        highScoreListEl.removeChild(highScoreListEl.firstChild);
+    }
+
+    localStorage.clear(highScores);
+}
 
 
 // show a bar with correct and hide wrong if any.
@@ -426,42 +453,31 @@ var saveHighScore = function () {
 
 // load values/ called on page load
 var loadHighScore = function () {
-    var loadedHighScores = localStorage.getItem(JSON.parse("highScores"));
+    var loadedHighScores = localStorage.getItem("highScores");
     if (!loadedHighScores) {
         return false;
     }
 
     loadedHighScores = JSON.parse(loadedHighScores);
-    loadedHighScores.sort(function (a, b) {
-        return b.score - a.score;
-    });
+    loadedHighScores.sort(sortedArray);
 
     for (var i = 0; i < loadedHighScores.length; i++) {
         var highScoreEl = document.createElement("li");
         highScoreEl.className = "high-score";
-        highScoreEl.textContent = loadedHighScores[i].initials + " - " + loadedHighScores[i].score;
+        highScoreEl.textContent = loadedHighScores[i].initials + " : " + loadedHighScores[i].score;
         highScoreListEl.appendChild(highScoreEl);
 
         highScores.push(loadedHighScores[i]);
     }
 };
 
-var clearScores = function () {
-    highScores = [];
-
-    while (highScoreListEl.firstChild) {
-        highScoreListEl.removeChild(highScoreListEl.firstChild);
-    }
-
-    localStorage.clear(highScores);
-}
-
-// loadHighScore();
+// send all score to localStorage;
+loadHighScore();
 
 // Add event Listeners
 viewHighScoresEl.addEventListener("click", displayHighScores);
 buttonStartGameEl.addEventListener("click", startGame);
-initialsFormEl.addEventListener("click", createHighScore)
-buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
-buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
-buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
+initialsFormEl.addEventListener("submit", createHighScore)
+// buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
+buttonGoBackEl.addEventListener("click", restartGame);
+buttonClearHighScoreEl.addEventListener("click", clearHighScores);

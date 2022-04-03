@@ -39,18 +39,19 @@ header h4 {
 
 .timer {
     color        : var(--primary);
-    /* display   : inline; */
-    /* text-align: right; */
     padding-right: 20px;
 }
 
 /* main content */
+
 /* all containers style is */
 .container {
-    padding       : 20px;
-    flex-direction: column;
-    width         : 90%;
-    margin        : auto;
+    padding          : 20px;
+    flex-direction   : column;
+    /* display       : flex; 
+    align-items      : center; */
+    width            : 50%;
+    margin           : auto;
 }
 
 h1 {
@@ -68,8 +69,13 @@ p {
     text-align : center;
 }
 
-.start p {
+/* .start p {
     text-align: left;
+} */
+
+.start h1,
+.start p {
+    text-align: center;
 }
 
 .questions {
@@ -79,16 +85,17 @@ p {
     margin         : auto;
 }
 
+
 .end h1,
 .end p {
-    /* text-align: left; */
-    display    : flex;
+    text-align: left;
+    /* display    : flex;
     align-items: center;
-    flex-wrap  : wrap;
+    flex-wrap  : wrap; */
 }
 
 /* input form style in end container */
-.end input {
+/* .end input {
     outline      : thick;
     border-width : 2px;
     padding      : 5px;
@@ -96,27 +103,37 @@ p {
     font-size    : 2.2rem;
     border-radius: 10px;
     margin       : 0 20px;
+} */
+
+.end input {
+    outline      : thick;
+    border-width : 1px;
+    padding      : 5px;
+    width        : 35%;
+    font-size    : 2.2rem;
+    border-radius: 5px;
 }
+
 
 /* then input form clicked to input info it will be */
 .end input:focus {
     border: 2px solid var(--secondary);
 }
 
-/* 
-.show {
-    display: flex; // i dont think we need it anymore it's overdone
-} */
-
 /* the elements with class hide will disapear from the page */
 .hide {
     display: none;
 }
 
+
 #question {
     text-align : left;
     font-size  : 3.0rem;
     font-weight: bold;
+}
+
+#high-score {
+    text-align: left;
 }
 
 /* Button styling */
@@ -133,6 +150,7 @@ p {
 
 .btn:hover {
     background   : var(--tertiary);
+    /* border-radius: 10px; */
     /* box-shadow: 0 2px grey; */
 }
 
@@ -150,20 +168,14 @@ p {
 
 .start-end {
     width     : 25%;
-    margin-top: 0;
+    margin-top: 10px;
 }
 
 .answer-btn {
-    width     : 50%;
     text-align: left;
-    font-size : 3.2vmin;
-    /* look this up vmin */
+    font-size : 3.0vw;
+    min-width : 200px;
 }
-
-}
-
-/* correct/wrong styling */
-/* correct/wrong styling */
 
 #correct,
 #wrong {
@@ -192,19 +204,27 @@ li:nth-child(odd) {
     background: rgba(228, 151, 164, 0.5);
 }
 
+li:nth-child(even) {
+    color: var(--secondary);
+}
+
 li {
     font-size: 4.0vw;
 }
 
 /* media query for smaller screens */
 
-@media screen and (max-width: 1720px) {
+@media screen and (max-width: 1024px) {
+
 
     .btn {
-        width    : 100%;
+        width: 100%;
         font-size: 3.0vw;
     }
 
+    /* .answer-btn {
+        height: fit-content;
+    } */
 
     #question {
         font-size: 4.5vw;
@@ -219,29 +239,3 @@ li {
     }
 
 }
-
-
-/* MINE IS HERE
-
-button {
-background-color: blueviolet;
-}
-button:hover{
-    background-color: orange;
-}
-.box {
-    padding         : 10px;
-    margin          : 20px;
-    border          : 5px solid rgb(0, 0, 0);
-    font-size: 32px;
-    background-color: blanchedalmond;
-    display: flex;
-    justify-content: center;
-    width: 390px;
-}
-
-#center-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}*/
