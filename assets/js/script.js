@@ -166,14 +166,32 @@ var randomIndexOfArray = function (array) {
     return Math.floor(Math.random() * array.length);
 };
 
+// every second, check if game-over is true, or if there is time left. Start time at questions.length * 6 6 second on a question.
+var setTime = function () {
+    timeLeft = questions.length * 6; // every question has 6 sec to chose the answer.
+
+    var timerCheck = setInterval(function () {
+        timerEl.textContent = timeLeft;
+        timeLeft--;
+
+        if (gameOver) {
+            clearInterval(timerCheck);
+        }
+
+        if (timeLeft < 0) {
+            showScore();
+            timerEl.textContent = 0;
+            clearInterval(timerCheck);
+        }
+    }, 1000);
+};
+
 //   WHEN I click the start button - I am presented with a question
 var startGame = function () {
 
-    timeLeft = questions.length * 6; // every question has 6 sec to chose the answer.
     starterContainerEl.classList.add("hide"); //hide content
     questionContainerEl.classList.remove("hide"); //show content
-    questionEl.textContent = questions[0].q; // display question
-    // bring questions and place them as buttons in question/answer container
+    setTime();
     displayAnswers();
 
 };
@@ -206,6 +224,29 @@ var answerCheck = function (event) {
 var setQuestion = function () {
     resetAnswers();
     displayAnswers(questions[questionIndex]);
+};
+
+// while we still have some answers in answers container remove first and go for next one which become first if not it stops.
+var resetAnswers = function () {
+    while (answerButtonsEl.firstChild) {
+        answerButtonsEl.removeChild(answerButtonsEl.firstChild);
+    }
+};
+
+
+//display question information (including answer buttons)
+var displayAnswers = function () {
+    questionEl.textContent = questions[questionIndex].q; // display question
+    for (var i = 0; i < questions[questionIndex].choices.length; i++) { // to display answers:
+        var answerButton = document.createElement("button");
+        answerButton.classList.add('btn');
+        answerButton.classList.add('answer-btn');
+        answerButton.textContent = questions[questionIndex].choices[i].choice;
+        // need to check answer here function.
+        answerButton.addEventListener('click', answerCheck);
+        answerButtonsEl.appendChild(answerButton);
+    }
+    console.log(questions[questionIndex].a); //log right answer
 };
 
 
@@ -265,25 +306,22 @@ var createHighScore = function (event) {
 
 };
 
-// while we still have some answers in answers container remove first and go for next one which become first if not it stops.
-var resetAnswers = () => {
-    while (answerButtonsEl.firstChild) {
-        answerButtonsEl.removeChild(answerButtonsEl.firstChild);
+var displayHighScores = function () {
+    highScoreContainerEl.classList.remove("hide");
+    gameOver = true;
+
+    if (highScoreContainerEl.className != "hide") {
+        starterContainerEl.className = 'hide';
+        questionContainerEl.className = 'hide';
+        endContainerEl.className = 'hide';
+        correctAnswerEl.className = 'hide';
+        wrongAnswerEl.className = 'hide';
     }
 };
 
-var displayAnswers = function () {
-    for (var i = 0; i < questions[questionIndex].choices.length; i++) { // to display answers:
-        var answerButton = document.createElement("button");
-        answerButton.classList.add('btn');
-        answerButton.classList.add('answer-btn');
-        answerButton.textContent = questions[questionIndex].choices[i].choice;
-        // need to check answer here function.
-        answerButton.addEventListener('click', answerCheck);
-        answerButtonsEl.appendChild(answerButton);
-    }
-    console.log(questions[questionIndex].a); //log right answer
-};
+
+
+
 // show a bar with correct and hide wrong if any.
 var answerCorrect = () => {
     if (correctAnswerEl.className === "hide") { // if hide already in class properties wont change anything. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
@@ -398,7 +436,7 @@ var loadHighScore = function () {
         return b.score - a.score;
     });
 
-    for (var i = 0; i<loadedHighScores.length;i++) {
+    for (var i = 0; i < loadedHighScores.length; i++) {
         var highScoreEl = document.createElement("li");
         highScoreEl.className = "high-score";
         highScoreEl.textContent = loadedHighScores[i].initials + " - " + loadedHighScores[i].score;
@@ -408,7 +446,7 @@ var loadHighScore = function () {
     }
 };
 
-var clearScores = function() {
+var clearScores = function () {
     highScores = [];
 
     while (highScoreListEl.firstChild) {
@@ -421,6 +459,7 @@ var clearScores = function() {
 // loadHighScore();
 
 // Add event Listeners
+viewHighScoresEl.addEventListener("click", displayHighScores);
 buttonStartGameEl.addEventListener("click", startGame);
 initialsFormEl.addEventListener("click", createHighScore)
 buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
