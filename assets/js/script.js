@@ -152,7 +152,7 @@ var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
 
 // High Score Array
-var HighScores = [];
+var highScores = [];
 // assign array details for questions
 var shuffledQuestions;
 var questionIndex = 0;
@@ -196,10 +196,10 @@ var answerCheck = function (event) {
     }
 
     // go to the next question, if we have more questions in array questions
-    if(questionIndex+1 < questions.length){ //don't run if just question cause error in start game with index.
+    if (questionIndex + 1 < questions.length) { //don't run if just question cause error in start game with index. TRY WHEN GAME OVER SET
         questionIndex++;
         setQuestion();
-    } 
+    }
     else {
         gameOver = true;
         showScore();
@@ -207,12 +207,16 @@ var answerCheck = function (event) {
 
 };
 
-var setQuestion = function() {
-    console.log("Set Question");
+var setQuestion = function () {
+    resetAnswers();
+    displayAnswers(questions[questionIndex]);
 };
 
-var showScore = function() {
-    console.log("Show Score");
+
+
+
+// to display score;
+var showScore = function () {
     questionContainerEl.classList.add("hide");
     highScoreContainerEl.classList.remove("hide");
 
@@ -221,6 +225,78 @@ var showScore = function() {
     highScoreContainerEl.appendChild(scoreDisplay);
 
 };
+
+// create high score values
+var createHighScore = function (event) {
+    event.preventDefault()
+    var initials = document.getElementById("initials").value;
+    if (!initial) {
+        alert("Enter your initials!");
+        return;
+    }
+    initialsFormEl.reset();
+
+    var initialScore = {
+        initials: initials,
+        score: score
+    }
+
+    // return sorted array
+    var sortedArray = function (a, b) {
+        return (b.score - a.score);
+    }
+    // push and sort scores
+    highScores.push(initialScore);
+    highScores.sort(function (a, b) {
+        return b.score - a.score
+    });
+
+    // clear visible list to resort
+    while (highScoreListEl.firstChild) {
+        highScoreListEl.removeChild(highScoreListEl.firstChild);
+    }
+
+    // create elements in order of high scores
+    for (var i = 0; i < highScores.length; i++) {
+        var highScoreEl = document.createElement('li');
+        highScoreEl.className = 'high-score';
+        highScoreEl.textContent = highScores[i].initials + " - " + highScores[i].score;
+        highScoreListEl.appendChild(highScoreEl);
+    }
+
+    saveHighScore();
+    displayHighScores(); // need a function
+
+};
+
+//save high score()
+var saveHighScore = function () {
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+};
+
+
+// load values/ called on page load
+var loadHighScore = function () {
+    var loadedHighScores = localStorage.getItem(JSON.parse("highScores"));
+    if (!loadHighScore) {
+        return false;
+    }
+
+    loadHighScore = JSON.parse(loadHighScore);
+    loadHighScore.sort(function (a, b) {
+        return b.score - a.score;
+    });
+
+    for (var i = 0; i<loadHighScore.length;i++) {
+        var hightScoreEl = document.createElement("li");
+        hightScoreEl.className = "high-score";
+        highScoreEl.textContent = loadedHighScores[i].initials + " - " + loadedHighScores[i].score;
+        highScoreListEl.appendChild(highScoreEl);
+
+        highScores.push(loadedHighScores[i]);
+    }
+};
+
 // while we still have some answers in answers container remove first and go for next one which become first if not it stops.
 var resetAnswers = () => {
     while (answerButtonsEl.firstChild) {
@@ -245,14 +321,16 @@ var answerCorrect = () => {
         correctAnswerEl.classList.remove("hide");
         wrongAnswerEl.classList.add("hide");
     }
-}
+};
 
 var answerWrong = () => {
     if (wrongAnswerEl.className = "hide") {
         wrongAnswerEl.classList.remove("hide");
         correctAnswerEl.classList.add("hide");
     }
-}
+};
+
+
 
 
 // User Story
@@ -348,6 +426,7 @@ var answerWrong = () => {
 
 
 buttonStartGameEl.addEventListener("click", startGame);
-buttonSubmitScoreEl.addEventListener("click", () => { console.log("I'm submit button") });
+initialsFormEl.addEventListener("click", createHighScore)
+buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
 buttonGoBackEl.addEventListener("click", () => { console.log("Did you press Go Back button?") });
 buttonClearHighScoreEl.addEventListener("click", () => { console.log("Did you press Clear high Scores?") });
