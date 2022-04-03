@@ -147,10 +147,6 @@ var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
-
-
-
-
 // High Score Array
 var highScores = [];
 // assign array details for questions
@@ -163,10 +159,9 @@ var gameOver;
 // sets timer to 0 before the start of quiz.
 timerEl.innerHTML = 0;
 
-
 // Functions
-// choose a random index from an array.length/it needs an array as an argument
 
+// choose a random index from an array.length/it needs an array as an argument
 var randomIndexOfArray = function (array) {
     return Math.floor(Math.random() * array.length);
 };
@@ -203,6 +198,7 @@ var answerCheck = function (event) {
     else {
         gameOver = true;
         showScore();
+        console.log(correctAnswerEl.className);
     }
 
 };
@@ -269,34 +265,6 @@ var createHighScore = function (event) {
 
 };
 
-//save high score()
-var saveHighScore = function () {
-    localStorage.setItem("highScores", JSON.stringify(highScores));
-};
-
-
-// load values/ called on page load
-var loadHighScore = function () {
-    var loadedHighScores = localStorage.getItem(JSON.parse("highScores"));
-    if (!loadHighScore) {
-        return false;
-    }
-
-    loadHighScore = JSON.parse(loadHighScore);
-    loadHighScore.sort(function (a, b) {
-        return b.score - a.score;
-    });
-
-    for (var i = 0; i<loadHighScore.length;i++) {
-        var hightScoreEl = document.createElement("li");
-        hightScoreEl.className = "high-score";
-        highScoreEl.textContent = loadedHighScores[i].initials + " - " + loadedHighScores[i].score;
-        highScoreListEl.appendChild(highScoreEl);
-
-        highScores.push(loadedHighScores[i]);
-    }
-};
-
 // while we still have some answers in answers container remove first and go for next one which become first if not it stops.
 var resetAnswers = () => {
     while (answerButtonsEl.firstChild) {
@@ -318,14 +286,14 @@ var displayAnswers = function () {
 };
 // show a bar with correct and hide wrong if any.
 var answerCorrect = () => {
-    if (correctAnswerEl.className = "hide") { // if hide already in class properties wont change anything. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
+    if (correctAnswerEl.className === "hide") { // if hide already in class properties wont change anything. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
         correctAnswerEl.classList.remove("hide");
         wrongAnswerEl.classList.add("hide");
     }
 };
 
 var answerWrong = () => {
-    if (wrongAnswerEl.className = "hide") {
+    if (wrongAnswerEl.className === "hide") {
         wrongAnswerEl.classList.remove("hide");
         correctAnswerEl.classList.add("hide");
     }
@@ -367,18 +335,7 @@ var answerWrong = () => {
 
 
 
-// // When I click the start button, timer starts
-// var startGame = function () {
-//     // add classes to show/hide start and quiz screen
-//     starterContainerEl.classList.add('hide'); // we might don't need to have show
-//     // starterContainerEl.classList.remove('show');
-//     questionContainerEl.classList.remove('hide');
-//     // questionContainerEl.classList.add('show');
-//     // shuffle the question so they will show in random order
-//     arrayShuffledQuestions = questions.sort(function () { Math.random() - 0.5; });
-//     setTime();
-//     setQuestion();
-// }
+// When I click the start button, timer starts
 
 // need to setTime function and setQuestion()
 
@@ -415,17 +372,55 @@ var answerWrong = () => {
 
 // Store scores into local storage
 
-// Stringify array in order to store in local
 
 // Show current high scores
 
 // Function to show high scores
 
 // // check if there is any local storage
+// SCORES
+//save high score()
+// Stringify array in order to store in local
+var saveHighScore = function () {
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+};
+
+
+// load values/ called on page load
+var loadHighScore = function () {
+    var loadedHighScores = localStorage.getItem(JSON.parse("highScores"));
+    if (!loadedHighScores) {
+        return false;
+    }
+
+    loadedHighScores = JSON.parse(loadedHighScores);
+    loadedHighScores.sort(function (a, b) {
+        return b.score - a.score;
+    });
+
+    for (var i = 0; i<loadedHighScores.length;i++) {
+        var highScoreEl = document.createElement("li");
+        highScoreEl.className = "high-score";
+        highScoreEl.textContent = loadedHighScores[i].initials + " - " + loadedHighScores[i].score;
+        highScoreListEl.appendChild(highScoreEl);
+
+        highScores.push(loadedHighScores[i]);
+    }
+};
+
+var clearScores = function() {
+    highScores = [];
+
+    while (highScoreListEl.firstChild) {
+        highScoreListEl.removeChild(highScoreListEl.firstChild);
+    }
+
+    localStorage.clear(highScores);
+}
+
+// loadHighScore();
 
 // Add event Listeners
-
-
 buttonStartGameEl.addEventListener("click", startGame);
 initialsFormEl.addEventListener("click", createHighScore)
 buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
