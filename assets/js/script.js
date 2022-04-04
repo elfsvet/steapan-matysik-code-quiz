@@ -1,3 +1,22 @@
+// User Story
+// AS A coding boot camp student
+// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
+// SO THAT I can gauge my progress compared to my peers
+
+
+// Acceptance Criteria
+// GIVEN I am taking a code quiz
+// WHEN I click the start button
+// THEN a timer starts and I am presented with a question
+// WHEN I answer a question
+// THEN I am presented with another question
+// WHEN I answer a question incorrectly
+// THEN time is subtracted from the clock
+// WHEN all questions are answered or the timer reaches 0
+// THEN the game is over
+// WHEN the game is over
+// THEN I can save my initials and score
+
 // Variables
 
 // Define a set of questions
@@ -171,14 +190,14 @@ var cleanScreen = function () {
 
 };
 
-// choose a random index from an array.length/it needs an array as an argument
+// choose a random index from an array.length/it needs an array as an argument for future mix question and answers
 var randomIndexOfArray = function (array) {
     return Math.floor(Math.random() * array.length);
 };
 
 // every second, check if game-over is true, or if there is time left. Start time at questions.length * 6 6 second on a question.
 var setTime = function () {
-    timeLeft = questions.length * 6; // every question has 6 sec to chose the answer.
+    timeLeft = questions.length * 6; // every question has 6 sec to choose an answer.
 
     var timerCheck = setInterval(function () {
         timerEl.textContent = timeLeft;
@@ -197,7 +216,7 @@ var setTime = function () {
     }, 1000);
 };
 
-
+// when we click on go back buttton we restart the game we need to start with first screen we saw when we started.
 var restartGame = function () {
     cleanScreen();
     starterContainerEl.classList.remove('hide');
@@ -366,24 +385,7 @@ var answerWrong = () => {
 
 
 
-// User Story
-// AS A coding boot camp student
-// I WANT to take a timed quiz on JavaScript fundamentals that stores high scores
-// SO THAT I can gauge my progress compared to my peers
 
-
-// Acceptance Criteria
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and I am presented with a question
-// WHEN I answer a question
-// THEN I am presented with another question
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
 
 
 
