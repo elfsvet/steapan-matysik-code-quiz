@@ -282,7 +282,7 @@ var displayAnswers = function () {
         answerButton.addEventListener('click', answerCheck);
         answerButtonsEl.appendChild(answerButton);
     }
-    // console.log(questions[questionIndex].a); //log right answer
+    // to display and answer place console log here
 };
 
 // to display score;
