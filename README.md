@@ -3,12 +3,6 @@
 
 This is a timed coding quiz with multiple-choice questions. This app is written from scratch.
 
-## Installation
-1. Download or clone repository
-2. Open the main page (index.html) on your browser to view webpage
-3. Use a text editor to view all coding, Visual Studio Coding is recommended.
-   
-
 ## Instructions
 1. Click "Start Quiz"
    * Timer on the top right will start to run
@@ -29,10 +23,68 @@ This is a timed coding quiz with multiple-choice questions. This app is written 
    
 6. The user then will have the option to click on "Go Back" to start quiz again, or "Clear High Scores" to clear saved scores
 
-## Features
-* HTML
-* CSS
-* JavaScript
 
-## Demo
-![Code Quiz Demo](Assets/code-quiz-demo.gif)
+# Stepan Matysik's Code Quiz
+> Code Quiz project. A website with a code quiz.
+> Live demo [_here_](https://elfsvet.github.io/steapan-matysik-code-quiz/). 
+
+## Table of contents
+* [General info](#general-info)
+* [Technologies](#technologies)
+* [Setup](#setup)
+* [Features](#features)
+* [Screenshots](#screenshots)
+* [Usage](#usage)
+* [Project Status](#project-status)
+* [Room for Improvement](#room-for-improvement)
+* [Acknowledgements](#acknowledgements)
+* [Contacts](#contact)
+
+
+
+## General Info
+This is a time-strict coding quiz with multiple-choice questions and score results.
+
+## Technologies
+Project is created with:
+- HTML
+- CSS
+- JavaScript
+
+## Setup
+To open this project in vscode using git in Terminal/Git Bash:
+
+```
+$ mkdir code-quiz
+$ cd code-quiz
+$ git clone https://github.com/elfsvet/steapan-matysik-code-quiz.git
+$ code .
+```
+
+## Features
+- API
+- Functions
+- localStorage
+
+## Screenshots
+![Example screenshot](./assets/images/.png)
+
+
+## Usage
+For informative and interactive purpose only
+
+## Project Status
+Project is: _complete_
+
+## Room for Improvement
+To do:
+- Need to have a privacy policy page.
+- Can have different, more unique styling.
+
+## Acknowledgements
+- This project was inspired by UM Coding Boot Camp
+- This project was creating from scratch using a gif picture.
+![Example gif](./assets/images/sample.gif)
+## Contact
+Created by [@elfsvet](https://github.com/elfsvet)
+- [LinkedIn](https://www.linkedin.com/in/stepanmatysik/)

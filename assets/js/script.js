@@ -20,6 +20,7 @@
 // Variables
 
 // Define a set of questions
+// an array with an object that has 3 keys. in one key a value is an array of objects with key : choice and values.
 var questions = [
     {
         q: 'Inside which HTML element do we put the JavaScript?',
@@ -149,12 +150,10 @@ var answerButtonsEl = document.getElementById("answer-buttons");
 var endContainerEl = document.getElementById("end-container");
 var scoreBannerEl = document.getElementById("score-banner");
 var initialsFormEl = document.getElementById("initials-form");
-// +one button with submit in the buttons section
 
 // high score container
 var highScoreContainerEl = document.getElementById("high-score-container");
 var highScoreListEl = document.getElementById("high-score-list");
-// +two more buttons look in the buttons section
 
 // correct/wrong answers containers
 var correctAnswerEl = document.getElementById("correct");
@@ -162,14 +161,12 @@ var wrongAnswerEl = document.getElementById("wrong");
 
 // Buttons
 var buttonStartGameEl = document.getElementById("start-game");
-// var buttonSubmitScoreEl = document.getElementById("submit-score");
 var buttonGoBackEl = document.getElementById("go-back");
 var buttonClearHighScoreEl = document.getElementById("clear-high-scores");
 
 // High Score Array
 var highScores = [];
 // assign array details for questions
-var shuffledQuestions;
 var questionIndex = 0;
 var score = 0;
 var timeLeft;
@@ -181,16 +178,13 @@ timerEl.innerHTML = 0;
 // Functions
 //to remove all containers from display
 var cleanScreen = function () {
-    starterContainerEl.className = 'hide';
-    questionContainerEl.className = 'hide';
-    endContainerEl.className = 'hide';
-    highScoreContainerEl.className = 'hide';
-    correctAnswerEl.className = 'hide';
-    wrongAnswerEl.className = 'hide';
-
+    var arrayOfContainers = [starterContainerEl, questionContainerEl, endContainerEl, highScoreContainerEl, correctAnswerEl, wrongAnswerEl];
+    for (var i = 0; i < arrayOfContainers.length; i++) {
+        arrayOfContainers[i].className = 'hide';
+    }
 };
 
-// choose a random index from an array.length/it needs an array as an argument for future mix question and answers
+// Didn't use it yet choose a random index from an array.length/it needs an array as an argument for future mix question and answers
 var randomIndexOfArray = function (array) {
     return Math.floor(Math.random() * array.length);
 };
@@ -198,18 +192,18 @@ var randomIndexOfArray = function (array) {
 // every second, check if game-over is true, or if there is time left. Start time at questions.length * 6 6 second on a question.
 var setTime = function () {
     timeLeft = questions.length * 6; // every question has 6 sec to choose an answer.
-
+    // every 1 sec timer displays seconds left and reduce by one sec
     var timerCheck = setInterval(function () {
         timerEl.textContent = timeLeft;
         timeLeft--;
-
+        // if game over -> stop interval execution.
         if (gameOver) {
             clearInterval(timerCheck);
         }
 
         if (timeLeft < 0) {
             showScore();
-            console.log("i am from set time ()");
+            // console.log("i am from set time ()");
             timerEl.textContent = 0;
             clearInterval(timerCheck);
         }
@@ -233,10 +227,11 @@ var startGame = function () {
     cleanScreen();
     questionContainerEl.classList.remove("hide"); //show content
     setTime();
-    setQuestion();
+    setAnswers();
 
 };
 
+// check for correct if not remove time and score if correct add score
 var answerCheck = function (event) {
     var selectedAnswer = event.target.textContent;
     if (questions[questionIndex].a === selectedAnswer) {    // if answer correct do next
@@ -250,9 +245,9 @@ var answerCheck = function (event) {
     }
 
     // go to the next question, if we have more questions in array questions
-    if (questionIndex + 1 < questions.length) { //don't run if just question cause error in start game with index. TRY WHEN GAME OVER SET
+    if (questionIndex + 1 < questions.length) { //don't run if just questionIndex cause error in start game with index. TRY WHEN GAME OVER SET
         questionIndex++;
-        setQuestion();
+        setAnswers();
     }
     else {
         gameOver = true;
@@ -262,7 +257,8 @@ var answerCheck = function (event) {
 
 };
 
-var setQuestion = function () {
+// remove previous question answers from screen and display new.
+var setAnswers = function () {
     resetAnswers();
     displayAnswers(questions[questionIndex]);
 };
@@ -273,7 +269,6 @@ var resetAnswers = function () {
         answerButtonsEl.removeChild(answerButtonsEl.firstChild);
     }
 };
-
 
 //display question information (including answer buttons)
 var displayAnswers = function () {
@@ -290,9 +285,6 @@ var displayAnswers = function () {
     console.log(questions[questionIndex].a); //log right answer
 };
 
-
-
-
 // to display score;
 var showScore = function () {
     cleanScreen();
@@ -304,7 +296,6 @@ var showScore = function () {
 
 
 };
-
 
 // return sorted array
 var sortedArray = function (a, b) {
@@ -350,12 +341,14 @@ var createHighScore = function (event) {
     displayHighScores();
 };
 
+// display all the scores
 var displayHighScores = function () {
     cleanScreen();
-    highScoreContainerEl.classList.remove("hide");  // highsc already has ol with initials and score
+    highScoreContainerEl.classList.remove("hide");  // high score already has ol with initials and score
     gameOver = true;
 };
 
+//remove score from localStorage
 var clearHighScores = function () {
     highScores = [];
 
@@ -366,91 +359,26 @@ var clearHighScores = function () {
     localStorage.clear(highScores);
 }
 
-
 // show a bar with correct and hide wrong if any.
-var answerCorrect = () => {
+var answerCorrect = function () {
     if (correctAnswerEl.className === "hide") { // if hide already in class properties wont change anything. it wont be class="hide hide" because of = sign. it removes old assignments and rewrites it to be that provided.
         correctAnswerEl.classList.remove("hide");
         wrongAnswerEl.classList.add("hide");
     }
 };
 
-var answerWrong = () => {
+var answerWrong = function () {
     if (wrongAnswerEl.className === "hide") {
         wrongAnswerEl.classList.remove("hide");
         correctAnswerEl.classList.add("hide");
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// When I click the start button, timer starts
-
-// need to setTime function and setQuestion()
-
-
-// Display questions information  including answer buttons
-
-
-// need to add answerCheck() function
-
-// need to create showScore() function
-
-
-
-
-// Then I am presented with a question and choices
-
-//after I answer a question, show if correct or wrong
-
-// // correct answer, add 1 score to final score
-
-// // wrong answer, deduct 10 second from timer
-
-// Repeat with the rest of questions
-
-// // if no more questions, run game over function
-
-// When all questions are answered or timer reaches 0, game over
-
-// // Show final score
-
-// Enter initial and store high score in local storage
-
-// // Stop function if initial is blank
-
-// Store scores into local storage
-
-
-// Show current high scores
-
-// Function to show high scores
-
-// // check if there is any local storage
 // SCORES
-//save high score()
-// Stringify array in order to store in local
+
+//save high score(). Stringify array in order to store in local
 var saveHighScore = function () {
     localStorage.setItem("highScores", JSON.stringify(highScores));
 };
-
 
 // load values/ called on page load
 var loadHighScore = function () {
@@ -472,13 +400,12 @@ var loadHighScore = function () {
     }
 };
 
-// send all score to localStorage;
+// send all score to localStorage after one round off the game;
 loadHighScore();
 
 // Add event Listeners
 viewHighScoresEl.addEventListener("click", displayHighScores);
 buttonStartGameEl.addEventListener("click", startGame);
 initialsFormEl.addEventListener("submit", createHighScore)
-// buttonSubmitScoreEl.addEventListener("click", () => { console.log("Did you press submit button?") });
 buttonGoBackEl.addEventListener("click", restartGame);
 buttonClearHighScoreEl.addEventListener("click", clearHighScores);
