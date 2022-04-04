@@ -328,8 +328,7 @@ var createHighScore = function (event) {
 
     saveHighScore();
     // debugger;
-    displayHighScores(); // need a function
-
+    displayHighScores();
 };
 
 var displayHighScores = function () {

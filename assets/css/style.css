@@ -1,7 +1,7 @@
 * {
     box-sizing: border-box;
 }
-
+/* set colors shortcuts */
 :root {
     --primary  : #0a0808c5;
     --secondary: #8207a1;
@@ -25,7 +25,7 @@ header {
     margin         : auto;
     width          : 85%;
 }
-
+/* hover over view high score will change style to this */
 #view-high-scores:hover {
     cursor: pointer;
     color : var(--tertiary);
@@ -48,14 +48,11 @@ header h4 {
 .container {
     padding          : 20px;
     flex-direction   : column;
-    /* display       : flex; 
-    align-items      : center; */
     width            : 50%;
     margin           : auto;
 }
 
 h1 {
-    /* color: var(--primary); */
     font-size  : 3.0rem;
     font-weight: bold;
 }
@@ -69,10 +66,6 @@ p {
     text-align : center;
 }
 
-/* .start p {
-    text-align: left;
-} */
-
 .start h1,
 .start p {
     text-align: center;
@@ -85,26 +78,12 @@ p {
     margin         : auto;
 }
 
-
 .end h1,
 .end p {
     text-align    : left;
-    /* display    : flex;
-    align-items   : center;
-    flex-wrap     : wrap; */
 }
 
 /* input form style in end container */
-/* .end input {
-    outline      : thick;
-    border-width : 2px;
-    padding      : 5px;
-    width        : 35%;
-    font-size    : 2.2rem;
-    border-radius: 10px;
-    margin       : 0 20px;
-} */
-
 .end input {
     outline      : thick;
     border-width : 1px;
@@ -113,7 +92,6 @@ p {
     font-size    : 2.2rem;
     border-radius: 5px;
 }
-
 
 /* then input form clicked to input info it will be */
 .end input:focus {
@@ -124,7 +102,6 @@ p {
 .hide {
     display: none;
 }
-
 
 #question {
     text-align : left;
@@ -177,6 +154,7 @@ p {
     min-width : 200px;
 }
 
+/* styling for answers at the bottom */
 #correct,
 #wrong {
     font-size : 25px;
@@ -186,6 +164,7 @@ p {
     margin    : 0 100px;
 }
 
+/* adding a line at the top of answers */
 #correct h2,
 #wrong h2 {
     border-top : 2px solid rgba(199, 187, 187, 0.8);
@@ -196,6 +175,7 @@ p {
 
 /* List for High Scores */
 
+/* ordered list have numbers in the beginning */
 ol {
     list-style-type: number;
 }
