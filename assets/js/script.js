@@ -252,7 +252,7 @@ var answerCheck = function (event) {
     else {
         gameOver = true;
         showScore();
-        console.log("im from answerCheck()");
+        // console.log("im from answerCheck()");
     }
 
 };
@@ -333,7 +333,7 @@ var createHighScore = function (event) {
         highScoreEl.className = 'high-score';
         highScoreEl.textContent = highScores[i].initials + " : " + highScores[i].score;
         highScoreListEl.appendChild(highScoreEl);
-        console.log(highScoreEl);
+        // console.log(highScoreEl);
     }
 
     saveHighScore();
